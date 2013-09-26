@@ -125,16 +125,25 @@ class Board
   end
   
   def to_s
+    puts
     # every_other = true
-    # puts "   0    1    2    3    4    5    6    7   "
+    puts "    0   1   2   3   4   5   6   7  "
     self.state.each_with_index do |row, r_index|
-      # print "#{r_index}"
+      print "#{r_index}"
       row.each_with_index do |col, c_index|
         square = self[r_index, c_index]
         if square
-          square.color == :red ? (print "  \u25CE  ".colorize( :color => :red, :background => :white  )) : (print "  \u25CE  ".colorize( :color => :black ))
+          if (c_index.odd? && r_index.odd?) || (c_index.even? && r_index.even?)
+            print "#{square}"#.colorize( :background => :light_cyan)
+          else
+            print "#{square}"#.colorize( :background => :light_white)
+          end
         else
-          print "  -  "
+          if (c_index.odd? && r_index.odd?) || (c_index.even? && r_index.even?)
+            print "   -"#.colorize( :background => :light_cyan )
+          else
+            print "   -"#.colorize( :background => :light_white )
+          end
         end
       end
       puts

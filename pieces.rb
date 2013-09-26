@@ -51,8 +51,8 @@ class Piece
   # 
   
   def to_s
-    color == :red ? ("  \u25CE  ".colorize(:color => :red)) : \
-    ("  \u25CE  ".colorize(:color => :black))
+    color == :red ? ("   \u25CE".colorize(:color => :red)) : \
+    ("   \u25CE".colorize(:color => :black))
   end
   
 end
