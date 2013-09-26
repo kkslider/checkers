@@ -11,8 +11,14 @@ class Board
   
   
   def add_pieces
+    add_red_pieces
+    add_black_pieces
+  end
+  
+  def add_red_pieces
     
   end
+  
   
   def [](pos)
     x, y = pos
@@ -25,6 +31,10 @@ class Board
   
   def out_of_bounds?(pos)
     pos.all? { |coord| coord >=0 && coord <= 7 }
+  end
+  
+  def has_enemy_piece?(color, pos)
+    empty?(pos) && state.color != color
   end
   
   def remove_piece(piece)

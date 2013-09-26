@@ -9,7 +9,11 @@ class Piece
     @king = false
   end
   
-  def directionals(color)
+  def opp_color
+    color == :red ? :black : :red
+  end
+  
+  def slide_moves
     if king
       return [[1, -1], [1, 1], [-1, -1], [-1, 1]]
     end
@@ -21,16 +25,15 @@ class Piece
     end
   end
   
-  def opp_color
-    color == :red ? :black : :red
-  end
-  
-  def slide_moves
-    
+  def valid_slide_moves
+    slide_moves.select { |pos| board.empty?(pos) }
   end
   
   def jump_moves
-    
+    potential_jumps = slide_moves
+    potential_jumps.select! { |pos| board.has_enemy_piece?(color, pos) }
+    potential_jumps.map! { |pos| [pos[0] * 2, pos[1] * 2] }
+    potential_jumps.select { |pos| board.empty?(pos) }
   end
   
   def valid_moves
