@@ -26,13 +26,16 @@ class Piece
   end
   
   def valid_slide_moves
-    slide_moves.select { |pos| board.empty?(pos) }
+    x, y = pos[0], pos[1]
+    potential_moves = slide_moves.map { |pos| [pos[0] + x, pos[1] + y] }
+    potential_moves.select { |pos| board.empty?(pos) }
   end
   
   def jump_moves
+    x, y = pos[0], pos[1]
     potential_jumps = slide_moves
-    potential_jumps.select! { |pos| board.has_enemy_piece?(color, pos) }
-    potential_jumps.map! { |pos| [pos[0] * 2, pos[1] * 2] }
+    potential_jumps.select! { |pos| board.has_enemy_piece?(color, [pos[0] + x, pos[1] + y]) }
+    # potential_jumps.map! { |pos| [pos[0] * 2, pos[1] * 2] }
     potential_jumps.select { |pos| board.empty?(pos) }
   end
   
