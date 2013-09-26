@@ -17,6 +17,16 @@ class Board
   def [](x, y)
     @state[x][y]
   end
+  # 
+  # def [](pos)
+  #   x, y = pos
+  #   @state[x][y]
+  # end
+  
+  # def []=(pos, value)
+  #   x, y = pos
+  #   @state[x][y] = value
+  # end
   
   def []=(x, y, value)
     @state[x][y] = value
@@ -66,8 +76,14 @@ class Board
   end
   
   def has_enemy_piece?(color, pos)
-    empty?(pos) && state.color != color
+    !empty?(pos) && self[pos[0], pos[1]].color != color
   end
+  
+  
+  
+  
+  
+  
   
   def remove_piece(piece)
     self.state[piece.pos.flatten] = nil

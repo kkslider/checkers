@@ -1,3 +1,5 @@
+require 'debugger'
+
 class Piece
   attr_reader :board, :color
   attr_accessor :pos, :king
@@ -32,11 +34,17 @@ class Piece
   end
   
   def jump_moves
+    # debugger
     x, y = pos[0], pos[1]
     potential_jumps = slide_moves
+    
+    # return the directional that it can do a jump over
     potential_jumps.select! { |pos| board.has_enemy_piece?(color, [pos[0] + x, pos[1] + y]) }
+    potential_jumps
+    
+    
     # potential_jumps.map! { |pos| [pos[0] * 2, pos[1] * 2] }
-    potential_jumps.select { |pos| board.empty?(pos) }
+    # potential_jumps.select { |pos| board.empty?(pos) }
   end
   
   def valid_moves
