@@ -21,7 +21,7 @@ class Piece
     if color == :red
       [[1, -1], [1, 1]]
     else
-      [[-1. -1], [-1, 1]]
+      [[-1, -1], [-1, 1]]
     end
   end
   
