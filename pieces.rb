@@ -9,6 +9,30 @@ class Piece
     @king = false
   end
   
+  def directionals(color)
+    if king
+      return [[1, -1], [1, 1], [-1, -1], [-1, 1]]
+    end
+    
+    if color == :red
+      [[1, -1], [1, 1]]
+    else
+      [[-1. -1], [-1, 1]]
+    end
+  end
+  
+  def opp_color
+    color == :red ? :black : :red
+  end
+  
+  def slide_moves
+    
+  end
+  
+  def jump_moves
+    
+  end
+  
   def valid_moves
     
   end

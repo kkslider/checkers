@@ -23,6 +23,13 @@ class Board
     state[pos].nil?
   end
   
+  def out_of_bounds?(pos)
+    pos.all? { |coord| coord >=0 && coord <= 7 }
+  end
+  
+  def remove_piece(piece)
+    self.state[piece.pos.flatten] = nil
+  end
   
   
 end
