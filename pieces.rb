@@ -1,4 +1,5 @@
 require 'debugger'
+require 'colorize'
 
 class Piece
   attr_reader :board, :color
@@ -40,16 +41,18 @@ class Piece
     
     # return the directional that it can do a jump over
     potential_jumps.select! { |pos| board.has_enemy_piece?(color, [pos[0] + x, pos[1] + y]) }
+    potential_jumps.select! { |pos| board.empty?([(pos[0]*2) + x, (pos[1]*2) + y]) }
     potential_jumps
-    
-    
-    # potential_jumps.map! { |pos| [pos[0] * 2, pos[1] * 2] }
-    # potential_jumps.select { |pos| board.empty?(pos) }
   end
+  # 
+  # def valid_moves
+  #   
+  # end
+  # 
   
-  def valid_moves
-    
+  def to_s
+    color == :red ? ("  \u25CE  ".colorize(:color => :red)) : \
+    ("  \u25CE  ".colorize(:color => :black))
   end
-  
   
 end

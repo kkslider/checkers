@@ -1,5 +1,6 @@
 require './pieces.rb'
 require 'debugger'
+require 'colorize'
 
 class Board
   attr_accessor :state
@@ -79,24 +80,59 @@ class Board
     !empty?(pos) && self[pos[0], pos[1]].color != color
   end
   
+  def move(pos_from, pos_to)
+    
+  end
+  
+  def perform_slide(pos_from, pos_to)
+    square = self[pos_from[0], pos_from[1]]
+    if !empty?(square.pos) && square.valid_slide_moves.include?(pos_to)
+      self[pos_to[0], pos_to[1]] = square
+      self.remove_piece(square)
+    else
+      puts "Invalid slide!"
+    end
+  end
   
   
   
+  def perform_jump(pos_from, pos_to)
+    # debugger
+    square = self[pos_from[0], pos_from[1]] # square.pos [1, 2]
+    x, y = square.pos[0], square.pos[1]
+    end_spots = square.jump_moves.map { |pos| [pos[0]*2 + x, pos[1]*2 + y] }
+    if end_spots.include?(pos_to)
+      self.remove_piece(square)
+      
+      remove_square_dir = square.jump_moves.select \
+        { |dir| [x + (dir[0]*2), y + (dir[1]*2)] == pos_to }
+      remove_square = self[remove_square_dir.flatten[0] + x, remove_square_dir.flatten[1] + y]
+      self.remove_piece(remove_square)
+      self.set_piece(pos_to, square)
+    end
+  end
   
-  
+  def set_piece(pos, piece)
+    x, y = pos
+    piece.pos = pos
+    self[x, y] = piece
+  end
   
   def remove_piece(piece)
-    self.state[piece.pos.flatten] = nil
+    x, y = piece.pos
+    # piece = nil
+    self[x, y] = nil
   end
   
   def to_s
-    puts "   0    1    2    3    4    5    6    7   "
+    # every_other = true
+    # puts "   0    1    2    3    4    5    6    7   "
     self.state.each_with_index do |row, r_index|
-      print "#{r_index}"
+      # print "#{r_index}"
       row.each_with_index do |col, c_index|
         square = self[r_index, c_index]
         if square
-          square.color == :red ? (print "  R  ") : (print "  B  ")
+          square.color == :red ? (print "  \u25CE  ".colorize( :color => :red, :background => :white  )) : (print "  \u25CE  ".colorize( :color => :black ))
         else
           print "  -  "
         end
@@ -104,6 +140,8 @@ class Board
       puts
     end
   end
+  nil
 end
 
 board = Board.new
+
