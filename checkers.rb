@@ -72,20 +72,20 @@ class Board
   end
   
   def add_black_pieces
-    self[5, 1] = Piece.new(self, :red, [5, 1])
-    self[5, 3] = Piece.new(self, :red, [5, 3])
-    self[5, 5] = Piece.new(self, :red, [5, 5])
-    self[5, 7] = Piece.new(self, :red, [5, 7])
+    self[5, 1] = Piece.new(self, :black, [5, 1])
+    self[5, 3] = Piece.new(self, :black, [5, 3])
+    self[5, 5] = Piece.new(self, :black, [5, 5])
+    self[5, 7] = Piece.new(self, :black, [5, 7])
   
-    self[6, 0] = Piece.new(self, :red, [6, 0])
-    self[6, 2] = Piece.new(self, :red, [6, 2])
-    self[6, 4] = Piece.new(self, :red, [6, 4])
-    self[6, 6] = Piece.new(self, :red, [6, 6])
+    self[6, 0] = Piece.new(self, :black, [6, 0])
+    self[6, 2] = Piece.new(self, :black, [6, 2])
+    self[6, 4] = Piece.new(self, :black, [6, 4])
+    self[6, 6] = Piece.new(self, :black, [6, 6])
     
-    self[7, 1] = Piece.new(self, :red, [7, 1])
-    self[7, 3] = Piece.new(self, :red, [7, 3])
-    self[7, 5] = Piece.new(self, :red, [7, 5])
-    self[7, 7] = Piece.new(self, :red, [7, 7])
+    self[7, 1] = Piece.new(self, :black, [7, 1])
+    self[7, 3] = Piece.new(self, :black, [7, 3])
+    self[7, 5] = Piece.new(self, :black, [7, 5])
+    self[7, 7] = Piece.new(self, :black, [7, 7])
     
     
     
@@ -140,7 +140,9 @@ class Board
   def to_s
     # debugger
     # p self.state
+    puts "   0    1    2    3    4    5    6    7   "
     self.state.each_with_index do |row, r_index|
+      print "#{r_index}"
       row.each_with_index do |col, c_index|
         square = self[r_index, c_index]
         if square
@@ -155,4 +157,4 @@ class Board
 end
 
 board = Board.new
-p board
+# p board
