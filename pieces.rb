@@ -16,6 +16,10 @@ class Piece
     color == :red ? :black : :red
   end
   
+  def promote
+    self.king = true
+  end
+  
   def slide_moves
     if king
       return [[1, -1], [1, 1], [-1, -1], [-1, 1]]
@@ -29,9 +33,11 @@ class Piece
   end
   
   def valid_slide_moves
+    # debugger
     x, y = pos[0], pos[1]
-    potential_moves = slide_moves.map { |pos| [pos[0] + x, pos[1] + y] }
-    potential_moves.select { |pos| board.empty?(pos) }
+    puts x
+    potential_moves = slide_moves.map { |pot_pos| [pot_pos[0] + x, pot_pos[1] + y] }
+    potential_moves.select { |pot_pos| board.empty?(pot_pos) }
   end
   
   def jump_moves
@@ -39,9 +45,8 @@ class Piece
     x, y = pos[0], pos[1]
     potential_jumps = slide_moves
     
-    # return the directional that it can do a jump over
-    potential_jumps.select! { |pos| board.has_enemy_piece?(color, [pos[0] + x, pos[1] + y]) }
     potential_jumps.select! { |pos| board.empty?([(pos[0]*2) + x, (pos[1]*2) + y]) }
+    potential_jumps.select! { |pos| board.has_enemy_piece?(color, [pos[0] + x, pos[1] + y]) }
     potential_jumps
   end
   # 

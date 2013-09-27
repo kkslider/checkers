@@ -21,13 +21,22 @@ class Checkers
   end
   
   def user_interaction
+    
     puts "#{self.current_player.to_s} enter the position of the piece you'd like to move."
     input_from = gets.chomp.split.map(&:to_i)
     puts "#{self.current_player.to_s} enter the position you'd like to move to."
     input_to = gets.chomp.split.map(&:to_i)
     
+    if board[input_from[0], input_from[1]].color != @players[self.current_player].color
+      puts "WRONG COLOR PIECE"
+    end
     
+    self.board.move(input_from, input_to)
     
+    self.current_player == :player_1 ? \
+      self.current_player = :player_2 : self.current_player = :player_1
+    
+    print self.board
   end
   
   def play
@@ -41,5 +50,5 @@ class Checkers
   
 end
 
-checkers = Checkers.new
-print checkers.board
+# checkers = Checkers.new
+# print checkers.board

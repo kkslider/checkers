@@ -59,7 +59,7 @@ class Board
   end
   
   def empty?(pos)
-    self[pos[0], pos[1]].nil? && !out_of_bounds?(pos)
+    !out_of_bounds?(pos) && self[pos[0], pos[1]].nil? 
   end
   
   def out_of_bounds?(pos)
@@ -70,15 +70,34 @@ class Board
     !empty?(pos) && self[pos[0], pos[1]].color != color
   end
   
-  def move(pos_from, pos_to)
+  def move(pos_from, pos_to)   
+    # debugger 
+    if is_slide?(pos_from, pos_to)
+      perform_slide(pos_from, pos_to) 
+    else
+      perform_jump(pos_from, pos_to)
+    end
     
+    piece = self[pos_to[0], pos_to[1]]
+    piece.promote if make_king?(piece.color, piece)
+  end
+  
+  def make_king?(color, piece)
+    row_for_king = (color == :red) ? 7 : 0
+    piece.pos[0] == row_for_king
+  end
+  
+  def is_slide?(pos_from, pos_to)
+    (pos_from[0] - pos_to[0]).abs == 1
   end
   
   def perform_slide(pos_from, pos_to)
+    # debugger
     square = self[pos_from[0], pos_from[1]]
     if !empty?(square.pos) && square.valid_slide_moves.include?(pos_to)
-      self[pos_to[0], pos_to[1]] = square
+      # self[pos_to[0], pos_to[1]] = square
       self.remove_piece(square)
+      self.set_piece(pos_to, square)
     else
       puts "Invalid slide!"
     end
