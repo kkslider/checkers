@@ -18,16 +18,6 @@ class Board
   def [](x, y)
     @state[x][y]
   end
-  # 
-  # def [](pos)
-  #   x, y = pos
-  #   @state[x][y]
-  # end
-  
-  # def []=(pos, value)
-  #   x, y = pos
-  #   @state[x][y] = value
-  # end
   
   def []=(x, y, value)
     @state[x][y] = value
@@ -93,8 +83,6 @@ class Board
       puts "Invalid slide!"
     end
   end
-  
-  
   
   def perform_jump(pos_from, pos_to)
     # debugger
